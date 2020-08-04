@@ -4,11 +4,15 @@ import { FooterBase } from './styles';
 function Footer() {
   return (
     <FooterBase>
-      <a href="https://www.alura.com.br/">
-        <img src="https://www.alura.com.br/assets/img/alura-logo-white.1570550707.svg" alt="Logo Alura" />
+      <a href="/">
+        <img class="Logo" src="/static/media/Logo.c14bf05c.png" alt="ReactFlix logo" />
       </a>
       <p>
-        Orgulhosamente criado durante a
+        Orgulhosamente criado por
+        {' '}
+          Isac Santos da Silva
+        {' '}
+          durante a
         {' '}
         <a href="https://www.alura.com.br/">
           Imersão React da Alura
