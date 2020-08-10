@@ -32,7 +32,7 @@ function CadastroCategoria() {
   useEffect(() => {
     // eslint-disable-next-line no-undef
     if (window.location.href.includes('localhost')) {
-      const URL = 'http://localhost:8080/categorias';
+      const URL = 'https://projectreactflix.herokuapp.com/categorias';
       // eslint-disable-next-line no-undef
       fetch(URL)
         .then(async (respostaDoServer) => {
@@ -91,11 +91,6 @@ function CadastroCategoria() {
           Cadastrar
         </Button>
       </form>
-
-      <div>
-        {/* Carregando... */}
-        Loading...
-      </div>
 
       <ul>
         {categorias.map((categoria) => (
