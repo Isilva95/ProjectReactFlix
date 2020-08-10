@@ -92,10 +92,18 @@ function CadastroCategoria() {
         </Button>
       </form>
 
+      {categorias.length === 0 && (
+        <div>
+          {/* Cargando... */}
+          Loading...
+        </div>
+      )}
+
       <ul>
-        {categorias.map((categoria) => (
-          <li key={`${categoria.nome}`}>
-            {categoria.nome}
+        {categorias.map((categoria, indice) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <li key={`${categoria}${indice}`}>
+            {categoria.titulo}
           </li>
         ))}
       </ul>
