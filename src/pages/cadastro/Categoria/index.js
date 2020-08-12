@@ -5,14 +5,7 @@ import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
 import Button from '../../../components/Button';
 
-function CadastroCategoria() {
-  const valoresIniciais = {
-    nome: '',
-    descricao: '',
-    cor: '',
-  };
-
-  const [categorias, setCategorias] = useState([]);
+function useForm(valoresIniciais) {
   const [values, setValues] = useState(valoresIniciais);
 
   function setValue(chave, valor) {
@@ -29,21 +22,45 @@ function CadastroCategoria() {
     );
   }
 
+  function clearForm() {
+    setValues(valoresIniciais);
+  }
+
+  return {
+    values,
+    handleChange,
+    clearForm,
+  };
+}
+
+function CadastroCategoria() {
+  const valoresIniciais = {
+    nome: '',
+    descricao: '',
+    cor: '',
+  };
+
+  const { handleChange, values, clearForm } = useForm(valoresIniciais);
+
+  const [categorias, setCategorias] = useState([]);
+
   useEffect(() => {
     // eslint-disable-next-line no-undef
-    if (window.location.href.includes('localhost')) {
-      const URL = 'https://projectreactflix.herokuapp.com/categorias';
-      // eslint-disable-next-line no-undef
-      fetch(URL)
-        .then(async (respostaDoServer) => {
-          if (respostaDoServer.ok) {
-            const resposta = await respostaDoServer.json();
-            setCategorias(resposta);
-            return;
-          }
-          throw new Error('Não foi possível pegar os dados');
-        });
-    }
+    const URL_TOP = window.location.hostname.includes('localhost')
+      ? 'http://localhost:8080/categorias'
+      : 'https://projectreactflix.herokuapp.com/categorias';
+    // eslint-disable-next-line no-undef
+    fetch(URL_TOP)
+      .then(async (respostaDoServer) => {
+        if (respostaDoServer.ok) {
+          const resposta = await respostaDoServer.json();
+          setCategorias([
+            ...resposta,
+          ]);
+          return;
+        }
+        throw new Error('Não foi possível pegar os dados');
+      });
   }, []);
 
   return (
@@ -60,7 +77,7 @@ function CadastroCategoria() {
           values,
         ]);
 
-        setValues(valoresIniciais);
+        clearForm();
       }}
       >
 
@@ -102,7 +119,7 @@ function CadastroCategoria() {
       <ul>
         {categorias.map((categoria, indice) => (
           // eslint-disable-next-line react/no-array-index-key
-          <li key={`${categoria}${indice}`}>
+          <li key={`${categoria.titulo}${indice}`}>
             {categoria.titulo}
           </li>
         ))}
