@@ -1,49 +1,58 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Menu from '../../components/Menu';
 import dadosIniciais from '../../data/dados_iniciais.json';
 import BannerMain from '../../components/BannerMain';
 import Carousel from '../../components/Carousel';
 import Footer from '../../components/Footer';
+import categoriasRepository from '../../repositories/categorias';
 
 function Home() {
+  useEffect(() => {
+    // http://localhost:8080/categorias?_embed=videos
+    categoriasRepository.getAllWithVideos()
+      .then((categoriasComVideos) => {
+        console.log(categoriasComVideos);
+      });
+  });
+
   return (
     <div>
-      <div style={{background: "#141414"}}>
+      <div style={{ background: '#141414' }}>
         <Menu />
 
-        <BannerMain 
+        <BannerMain
           videoTitle={dadosIniciais.categorias[0].videos[0].titulo}
           url={dadosIniciais.categorias[0].videos[0].url}
-          videoDescription={"O que é Front-End ? Trabalhando na área de termos HTML, CSS e JavaScript fazem parte da rotina dos desenvolvedores." }
+          videoDescription="O que é Front-End ? Trabalhando na área de termos HTML, CSS e JavaScript fazem parte da rotina dos desenvolvedores."
         />
 
-        <Carousel 
+        <Carousel
           ignoreFirstVideo
           category={dadosIniciais.categorias[0]}
         />
 
-        <Carousel 
+        <Carousel
           category={dadosIniciais.categorias[1]}
         />
 
-        <Carousel 
+        <Carousel
           category={dadosIniciais.categorias[2]}
         />
 
-        <Carousel 
+        <Carousel
           category={dadosIniciais.categorias[3]}
         />
 
-        <Carousel 
+        <Carousel
           category={dadosIniciais.categorias[4]}
         />
 
-        <Carousel 
+        <Carousel
           category={dadosIniciais.categorias[5]}
         />
 
         <Footer />
-      </div>  
+      </div>
 
     </div>
   );
